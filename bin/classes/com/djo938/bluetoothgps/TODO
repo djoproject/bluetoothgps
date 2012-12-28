@@ -1,0 +1,15 @@
+parametre
+	-faire un parametre pour definir l'uid du canal rfcomm
+	-binder les parametres avec l'application
+
+AbstractServer
+	mettre les methodes onStart/onStop/... en synchronized
+	
+bluetooth
+	-gerer le pairing automatiquement
+	
+GPS
+	-faire la classe GPS
+
+Warning
+	-retirer tous les warnings

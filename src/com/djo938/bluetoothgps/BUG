@@ -1,0 +1,7 @@
+recuperation du serveur TCP
+	lorsqu'on coupe l'applic et qu'on la relance, le port tcp est marque comme deja utilisé
+	trouver le moyen de recuperer le serveur tcp.
+	
+action retour sur les parametres
+	lorsqu'on fait retour sur les parametres, ça revient sur l'ecran d'accueil d'android, 
+	ca devrait revenir sur l'ecran d'acceuil de l'applic 

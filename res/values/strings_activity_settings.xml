@@ -1,0 +1,38 @@
+<resources>
+
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+
+
+    <!-- Example General settings -->
+
+    <!-- Example settings for Data & Sync -->
+
+    <!-- Example settings for Notifications -->
+    <string-array name="pref_gps_provider_list_titles">
+        <item >gps</item>
+        <item >network</item>
+        <item >passive</item>
+    </string-array>
+    <string name="pref_title_location_source">Location Source</string>
+    <string-array name="pref_gps_provider_list_values">
+        <item >0</item>
+        <item >1</item>
+        <item >2</item>
+    </string-array>
+    <string name="pref_title_blue_checkbox">Enable bluetooth server</string>
+    <string name="pref_title_tcpip_checkbox">Enable TCP/IP server</string>
+    <string name="pref_summary_blue_checkbox">enable or disable the bluetooth server</string>
+    <string name="pref_summary_tcpip_checkbox">enable or disable he tcp/ip server</string>
+    <string name="pref_header_general">Settings</string>
+    <string name="pref_header_bluetooth">Bluetooth Settings</string>
+    <string name="pref_header_tcpip">TCP/IP Settings</string>
+    <string name="pref_header_gps">GPS Settings</string>
+    <string name="pref_title_tcpip_port">TCP/IP Port</string>
+    <string name="pref_summary_tcpip_port">set the tcp/ip port</string>
+    <string name="pref_title_tcpip_max">Maximum Client Count</string>
+    <string name="pref_title_gps_forge">Forge NMEA data</string>
+    <string name="pref_summary_gps_forge">Some gps chip doesn\'t provide NMEA data</string>
+    <string name="pref_title_bluetooth_max">Maximum Client Count</string>
+</resources>
