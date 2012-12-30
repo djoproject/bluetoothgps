@@ -1,24 +1,61 @@
 package com.djo938.bluetoothgps.seeder;
 
+import java.util.List;
+
+import android.location.GpsStatus;
 import android.location.GpsStatus.NmeaListener;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.GpsStatus.Listener;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import com.djo938.bluetoothgps.nmea.NMEA;
 
 
 public class GPSSystem extends AbstractSeeder implements NmeaListener,LocationListener,Listener
 {
-	//LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+	private LocationManager locationManager;
+	private boolean enable;
 
 	public GPSSystem(LocationManager locationManager)
 	{
-		locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
+		this.locationManager = locationManager;
+		enable = false;
+	}
+	
+	public synchronized void disable()
+	{
+		locationManager.removeUpdates(this);
+		locationManager.removeNmeaListener(this);
+		locationManager.removeGpsStatusListener(this);
+		enable = false;
+	}
+	
+	public synchronized void enableGpsProvider(Looper looper)
+	{
+		disable();
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, this,looper);
 		locationManager.addNmeaListener(this);
-		Log.v("GPSSystem","start");
+		locationManager.addGpsStatusListener(this);
+		enable = true;
+	}
+	
+	public synchronized void enableNetworkProvider(Looper looper)
+	{
+		disable();
+		locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0, this,looper);
+		locationManager.addNmeaListener(this);
+		enable = true;
+	}
+	
+	public synchronized void enablePassiveProvider(Looper looper)
+	{
+		disable();
+		locationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, 1000, 0, this,looper);
+		locationManager.addNmeaListener(this);
+		enable = true;
 	}
 
 	@Override
@@ -81,4 +118,27 @@ public class GPSSystem extends AbstractSeeder implements NmeaListener,LocationLi
                          NMEA.formatBearing(location) + "," +
                          date + ",,");
     }
+    
+	@Override
+	public void onGpsStatusChanged(int event) 
+	{
+		if (event == GpsStatus.GPS_EVENT_SATELLITE_STATUS)
+            sendSatellite(locationManager.getGpsStatus(null));
+		
+	}
+    
+    private void sendSatellite(GpsStatus gps) {
+        String gsa = NMEA.formatGpsGsa(gps);
+        sendWithChecksum("GPGSA,A," + gsa);
+
+        List<String> gsvs = NMEA.formatGpsGsv(gps);
+        for(String gsv : gsvs)
+            sendWithChecksum("GPGSV," + gsvs.size() + "," +
+                             Integer.toString(gsvs.indexOf(gsv)+1) + "," + gsv);
+    }
+
+	public boolean isEnable() 
+	{
+		return enable;
+	}
 }

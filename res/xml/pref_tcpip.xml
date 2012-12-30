@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
-    <CheckBoxPreference android:key="tcpip_enable" android:summary="@string/pref_summary_tcpip_checkbox" android:title="@string/pref_title_tcpip_checkbox" android:defaultValue="true"/>
+    <CheckBoxPreference android:key="tcpip_enable" android:summary="@string/pref_summary_tcpip_checkbox" android:title="@string/pref_title_tcpip_checkbox" android:defaultValue="@string/pref_default_tcpip_checkbox"/>
     <EditTextPreference 
         android:inputType="number"
         android:key="tcpip_port" 
         android:title="@string/pref_title_tcpip_port" 
-        android:defaultValue="1234"/>
+        android:defaultValue="@string/pref_default_tcpip_port"/>
     <EditTextPreference 
         android:inputType="number"
         android:key="tcpip_max" 
-        android:defaultValue="5" 
+        android:defaultValue="@string/pref_default_tcpip_max" 
         android:title="@string/pref_title_tcpip_max"/>
     
 

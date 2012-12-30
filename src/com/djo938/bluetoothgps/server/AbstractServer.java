@@ -5,6 +5,7 @@ import java.io.OutputStream;
 import java.util.LinkedList;
 import java.util.List;
 
+import android.os.Looper;
 import android.util.Log;
 
 import com.djo938.bluetoothgps.server.client.ClientInterface;
@@ -59,6 +60,7 @@ public abstract class AbstractServer implements Runnable
 	@Override
 	public void run() 
 	{
+		Looper.prepare();
 		while(this.running && !this.pause)
 		{
 			//reach max client count?
@@ -267,4 +269,9 @@ public abstract class AbstractServer implements Runnable
 		return serverName;
 	}
 	
+	public int getClientCount() 
+	{
+		// TODO Auto-generated method stub
+		return clientList.size();
+	}
 }

@@ -14,8 +14,8 @@
         android:negativeButtonText="@null"
         android:positiveButtonText="@null"
         android:title="@string/pref_title_location_source"
-        android:defaultValue="0"/>
-    <CheckBoxPreference android:defaultValue="True" android:summary="@string/pref_summary_gps_forge" android:title="@string/pref_title_gps_forge" android:key="gps_forge"/>
+        android:defaultValue="@string/pref_default_gps_provider_list"/>
+    <CheckBoxPreference android:defaultValue="@string/pref_default_gps_forge" android:summary="@string/pref_summary_gps_forge" android:title="@string/pref_title_gps_forge" android:key="gps_forge"/>
     
 
 </PreferenceScreen>

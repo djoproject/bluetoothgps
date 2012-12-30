@@ -40,6 +40,12 @@ public final class R {
         public static final int app_name=0x7f050000;
         public static final int hello_world=0x7f050001;
         public static final int menu_settings=0x7f050002;
+        public static final int pref_default_blue_checkbox=0x7f050017;
+        public static final int pref_default_gps_forge=0x7f050019;
+        public static final int pref_default_gps_provider_list=0x7f050016;
+        public static final int pref_default_tcpip_checkbox=0x7f050018;
+        public static final int pref_default_tcpip_max=0x7f05001b;
+        public static final int pref_default_tcpip_port=0x7f05001a;
         public static final int pref_header_bluetooth=0x7f05000d;
         public static final int pref_header_general=0x7f05000c;
         public static final int pref_header_gps=0x7f05000f;

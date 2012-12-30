@@ -13,9 +13,9 @@ public class TCPIPServer extends AbstractServer
 	private ServerSocket server;
 	private int port;
 	
-	public TCPIPServer(int port) 
+	public TCPIPServer(int port,int maxclient) 
 	{
-		super("TCP/IP Server",2);
+		super("TCP/IP Server",maxclient);
 		
 		server = null;
 		this.port = port;

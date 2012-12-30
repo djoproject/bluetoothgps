@@ -35,4 +35,10 @@
     <string name="pref_title_gps_forge">Forge NMEA data</string>
     <string name="pref_summary_gps_forge">Some gps chip doesn\'t provide NMEA data</string>
     <string name="pref_title_bluetooth_max">Maximum Client Count</string>
+    <string name="pref_default_gps_provider_list">0</string>
+    <string name="pref_default_blue_checkbox">true</string>
+    <string name="pref_default_tcpip_checkbox">true</string>
+    <string name="pref_default_gps_forge">true</string>
+    <string name="pref_default_tcpip_port">1234</string>
+    <string name="pref_default_tcpip_max">5</string>
 </resources>
