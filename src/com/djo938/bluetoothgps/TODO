@@ -9,7 +9,10 @@ bluetooth
 	-gerer le pairing automatiquement
 	
 GPS
-	-faire la classe GPS
+	-desactiver le timer si pas de client
 
 Warning
 	-retirer tous les warnings
+	
+Service
+	Stop/Start/Restart the service

@@ -274,4 +274,14 @@ public abstract class AbstractServer implements Runnable
 		// TODO Auto-generated method stub
 		return clientList.size();
 	}
+	
+	public String getClientSummary()
+	{
+		String s = "";
+		for(ClientInterface ci : clientList)
+		{
+			s += ci.getIdentity();
+		}
+		return s;
+	}
 }

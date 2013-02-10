@@ -1,5 +1,6 @@
 package com.djo938.bluetoothgps.seeder;
 
+import java.util.Date;
 import java.util.List;
 
 import android.location.GpsStatus;
@@ -9,20 +10,28 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.GpsStatus.Listener;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import com.djo938.bluetoothgps.nmea.NMEA;
 
 
-public class GPSSystem extends AbstractSeeder implements NmeaListener,LocationListener,Listener
+public class GPSSystem extends AbstractSeeder implements NmeaListener,LocationListener,Listener, Runnable
 {
 	private LocationManager locationManager;
 	private boolean enable;
+	private Location lastLocation;
+	private Handler timer;
 
 	public GPSSystem(LocationManager locationManager)
 	{
 		this.locationManager = locationManager;
 		enable = false;
+		setLastLocation(new Location("bluetooth gps"));
+		getLastLocation().setTime(System.currentTimeMillis());
+		getLastLocation().setAltitude(0);
+		timer = new Handler();
+		timer.postDelayed(this, 5000);
 	}
 	
 	public synchronized void disable()
@@ -68,8 +77,12 @@ public class GPSSystem extends AbstractSeeder implements NmeaListener,LocationLi
 	@Override
 	public void onLocationChanged(Location newLocation) 
 	{
+		timer.removeCallbacks(this);
 		Log.v("onLocationChanged",""+newLocation);
+		setLastLocation(newLocation);
+		
         sendLocation(newLocation);
+        timer.postDelayed(this, 5000);
 	}
 
 	@Override
@@ -100,7 +113,8 @@ public class GPSSystem extends AbstractSeeder implements NmeaListener,LocationLi
         super.fireNewData((line+"\n").getBytes());
     }
 
-    private void sendLocation(Location location) 
+    @SuppressWarnings("deprecation")
+	private void sendLocation(Location location) 
     {
         String time = NMEA.formatTime(location);
         String date = NMEA.formatDate(location);
@@ -117,6 +131,34 @@ public class GPSSystem extends AbstractSeeder implements NmeaListener,LocationLi
                          NMEA.formatSpeedKt(location) + "," +
                          NMEA.formatBearing(location) + "," +
                          date + ",,");
+        Date d = new Date();
+        String hour = ""+d.getHours();
+        if(hour.length() == 1)
+        	hour = "0"+hour;
+        
+        String minute = ""+d.getMinutes();
+        if(minute.length() == 1)
+        	minute = "0"+minute;
+        
+        String seconds = ""+d.getSeconds();
+        if(seconds.length() == 1)
+        	seconds = "0"+seconds;
+        
+        String days = ""+d.getDate();
+        if(days.length() == 1)
+        	days = "0"+days;
+        
+        String month = ""+(d.getMonth()+1);
+        if(month.length() == 1)
+        	month = "0"+month;
+        
+        String year = ""+(1900+d.getYear());
+        
+        String GPZDA = "GPZDA,"+hour+minute+seconds+".00,"+days+","+month+","+year+",00,00";
+        Log.v("GPZDA", GPZDA);
+        sendWithChecksum(GPZDA);
+        
+        //TODO send gpzda
     }
     
 	@Override
@@ -140,5 +182,22 @@ public class GPSSystem extends AbstractSeeder implements NmeaListener,LocationLi
 	public boolean isEnable() 
 	{
 		return enable;
+	}
+
+	@Override
+	public void run() 
+	{
+		timer.postDelayed(this, 5000);
+		sendLocation(this.getLastLocation());
+		
+		Log.v("bluetooth.gps", "timer expire");
+	}
+
+	public Location getLastLocation() {
+		return lastLocation;
+	}
+
+	public void setLastLocation(Location lastLocation) {
+		this.lastLocation = lastLocation;
 	}
 }

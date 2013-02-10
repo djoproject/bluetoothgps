@@ -1,7 +1,13 @@
 package com.djo938.bluetoothgps;
 
+import java.util.Date;
 import java.util.Set;
+
+import com.djo938.bluetoothgps.MainService.LocalBinder;
+
+import android.location.Location;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -9,10 +15,12 @@ import android.app.ActivityManager.RunningServiceInfo;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.Menu;
@@ -21,6 +29,26 @@ import android.widget.TextView;
 public class MainActivity extends Activity
 {
 	private int counter;
+	private boolean mBound = false;
+	private MainService mService;
+	private boolean binded = false; 
+	
+	private ServiceConnection mConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className,IBinder service) {
+            // We've bound to LocalService, cast the IBinder and get LocalService instance
+            LocalBinder binder = (LocalBinder) service;
+            mService = binder.getService();
+            mBound = true;
+            Log.v("MainActivity", "Service bound");
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            mBound = false;
+        }
+    };
 	
 	public MainActivity()
 	{
@@ -58,7 +86,7 @@ public class MainActivity extends Activity
 	    	
 	    	for(BluetoothDevice bd : paired)
 	    	{
-	    		ret += "\n<>"+bd.getName() + " " + bd.getAddress();
+	    		ret += "\n<><"+bd.getName() + "> <" + bd.getAddress()+">";
 	    		//ret += "\n   "+bd.;
 	    	}
     	}
@@ -73,6 +101,20 @@ public class MainActivity extends Activity
     	else
     	{
     		ret += "\n<> service not started";
+    	}
+    	
+    	if(this.mBound)
+    	{
+    		ret += "\n<> "+this.mService.getClient();
+    		Location l = this.mService.getLastLocation();
+    		if(l.hasAltitude())
+    			ret += "\n<> "+new Date(l.getTime())+"\n"+l.getLatitude()+", "+l.getLongitude()+", "+l.getAltitude();
+    		else
+    			ret += "\n<> "+new Date(l.getTime())+"\n"+l.getLatitude()+", "+l.getLongitude();
+    	}
+    	else
+    	{
+    		ret += "\n<> service not bound (binded="+binded+")";
     	}
     	
     	
@@ -101,8 +143,18 @@ public class MainActivity extends Activity
         	Log.v("starting service", "NO");
         }
         
-        Log.v("onCreate", "loading");
-        setContentView(textView);
+        /*TODO binding*/
+        if(!binded)
+        {
+        	Intent intent = new Intent(this, MainService.class);
+            bindService(intent, mConnection, 0);
+            
+            Log.v("onCreate", "loading");
+            setContentView(textView);
+            
+            binded = true;
+        }
+        Log.v("onCreate", "end");
     }
 
     @Override
@@ -157,6 +209,12 @@ public class MainActivity extends Activity
     			startActivity(intent);
     			this.finish();
     			break;
+    			
+    		case R.id.restart:
+    			stopService(new Intent(this,MainService.class));
+    			startService(new Intent(this,MainService.class));
+    			
+    			break;
     	}
     	return true;
     }
@@ -173,4 +231,16 @@ public class MainActivity extends Activity
 	    }
 	    return false;
 	}
+	
+	@Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Unbind from the service
+        if (mBound) {
+            unbindService(mConnection);
+            mBound = false;
+            binded = false;
+        }
+        Log.v("onDestroy", "end");
+    }
 }

@@ -7,5 +7,6 @@
     <string name="title_activity_second">SecondActivity</string>
     <string name="about_text">about</string>
     <string name="refresh_text">refresh</string>
+    <string name="menu_restart">Restart</string>
 
 </resources>

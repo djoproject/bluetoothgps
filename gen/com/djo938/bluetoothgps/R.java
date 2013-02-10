@@ -26,6 +26,7 @@ public final class R {
         public static final int menu_about=0x7f090002;
         public static final int menu_refresh=0x7f090001;
         public static final int menu_settings=0x7f090000;
+        public static final int restart=0x7f090003;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
@@ -39,31 +40,32 @@ public final class R {
         public static final int about_text=0x7f050004;
         public static final int app_name=0x7f050000;
         public static final int hello_world=0x7f050001;
+        public static final int menu_restart=0x7f050006;
         public static final int menu_settings=0x7f050002;
-        public static final int pref_default_blue_checkbox=0x7f050017;
-        public static final int pref_default_gps_forge=0x7f050019;
-        public static final int pref_default_gps_provider_list=0x7f050016;
-        public static final int pref_default_tcpip_checkbox=0x7f050018;
-        public static final int pref_default_tcpip_max=0x7f05001b;
-        public static final int pref_default_tcpip_port=0x7f05001a;
-        public static final int pref_header_bluetooth=0x7f05000d;
-        public static final int pref_header_general=0x7f05000c;
-        public static final int pref_header_gps=0x7f05000f;
-        public static final int pref_header_tcpip=0x7f05000e;
-        public static final int pref_summary_blue_checkbox=0x7f05000a;
-        public static final int pref_summary_gps_forge=0x7f050014;
-        public static final int pref_summary_tcpip_checkbox=0x7f05000b;
-        public static final int pref_summary_tcpip_port=0x7f050011;
-        public static final int pref_title_blue_checkbox=0x7f050008;
-        public static final int pref_title_bluetooth_max=0x7f050015;
-        public static final int pref_title_gps_forge=0x7f050013;
-        public static final int pref_title_location_source=0x7f050007;
-        public static final int pref_title_tcpip_checkbox=0x7f050009;
-        public static final int pref_title_tcpip_max=0x7f050012;
-        public static final int pref_title_tcpip_port=0x7f050010;
+        public static final int pref_default_blue_checkbox=0x7f050018;
+        public static final int pref_default_gps_forge=0x7f05001a;
+        public static final int pref_default_gps_provider_list=0x7f050017;
+        public static final int pref_default_tcpip_checkbox=0x7f050019;
+        public static final int pref_default_tcpip_max=0x7f05001c;
+        public static final int pref_default_tcpip_port=0x7f05001b;
+        public static final int pref_header_bluetooth=0x7f05000e;
+        public static final int pref_header_general=0x7f05000d;
+        public static final int pref_header_gps=0x7f050010;
+        public static final int pref_header_tcpip=0x7f05000f;
+        public static final int pref_summary_blue_checkbox=0x7f05000b;
+        public static final int pref_summary_gps_forge=0x7f050015;
+        public static final int pref_summary_tcpip_checkbox=0x7f05000c;
+        public static final int pref_summary_tcpip_port=0x7f050012;
+        public static final int pref_title_blue_checkbox=0x7f050009;
+        public static final int pref_title_bluetooth_max=0x7f050016;
+        public static final int pref_title_gps_forge=0x7f050014;
+        public static final int pref_title_location_source=0x7f050008;
+        public static final int pref_title_tcpip_checkbox=0x7f05000a;
+        public static final int pref_title_tcpip_max=0x7f050013;
+        public static final int pref_title_tcpip_port=0x7f050011;
         public static final int refresh_text=0x7f050005;
         public static final int title_activity_second=0x7f050003;
-        public static final int title_activity_settings=0x7f050006;
+        public static final int title_activity_settings=0x7f050007;
     }
     public static final class style {
         /** 
